@@ -1,0 +1,40 @@
+#include "mbed.h"
+// takes in V_out (desired voltage across heating element) and output PWM
+Serial pc(SERIAL_TX, SERIAL_RX);
+const double V_pk = 3.3; // DC voltage output is 3.3
+const double G = 3; //Gain of op amp = Vout/V+
+double V_out = 5;
+float duty_cycle;
+
+PwmOut PWM1(D6);
+int main() {
+            PWM1.period(0.010); // set PWM period to 10 ms 
+            PWM1=V_out/G/V_pk; // set duty cycle to 50%
+            duty_cycle = PWM1.read();
+            pc.printf("duty_cycle*100 ~= %i \r\n", int(duty_cycle*100));
+}
+
+/*
+
+const double pi = 3.141592653589793238462;
+const double amplitude = 0.5f;
+const double offset = 65535/2;
+
+// The sinewave is created on this pin
+AnalogOut aout(A5);
+
+int main()
+{
+    double rads = 0.0;
+    uint16_t sample = 0;
+    
+    while(1) {
+        // sinewave output
+        for (int i = 0; i < 360; i++) {
+            rads = (pi * i) / 180.0f;
+            sample = (uint16_t)(amplitude * (offset * (cos(rads + pi))) + offset);
+            aout.write_u16(sample);
+        }
+    }
+}
+*/

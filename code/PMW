@@ -1,0 +1,14 @@
+#include "mbed.h"
+// create sine wave analog output
+Serial pc(SERIAL_TX, SERIAL_RX);
+const double V_pk = 3.3; // DC voltage output is 3.3
+const double G = 3; //Gain of op amp = Vout/V+
+const double R =4; //resistance of heating element
+double V_out ;
+float duty_cycle;
+//V_out = 10;
+
+
+const double pi = 3.141592653589793238462;
+const double amplitude = 0.5f;
+const double offset = 0.5;

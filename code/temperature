@@ -1,0 +1,24 @@
+#include "mbed.h"
+#include "stdint.h" //This allow the use of integers of a known width
+
+ 
+SPI sensor(D11,D12,D13);
+DigitalOut cs(D10);
+Serial pc(USBTX, USBRX);
+char buffer[2];
+int16_t data;
+
+float T;
+int main() {
+    while (1){
+        wait(0.2);
+        cs=0;
+        for (int i = 0;i<=1;i++) {
+            buffer[i]=sensor.write(0x00);
+        }
+    cs = 1;
+    data = buffer[0]<<8|buffer[1]; // need to set the last 3 bits (0,1,2)
+    T = data/32;
+    pc.printf("Temperature = %.3f\r\n",T);
+    }
+}
